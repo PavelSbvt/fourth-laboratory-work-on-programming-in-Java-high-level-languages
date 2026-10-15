@@ -1,0 +1,81 @@
+package ru.sablin.lab4.utils;
+
+import org.fusesource.jansi.AnsiConsole;
+
+import static org.fusesource.jansi.Ansi.*;
+import static org.fusesource.jansi.Ansi.ansi;
+
+
+public class outputFunctions {
+    static {
+        AnsiConsole.systemInstall();
+    }
+
+    public static String getTime() {
+        final short MILLISECONDS_PER_SECOND = 1000;
+        final byte SECONDS_PER_MINUTE = 60;
+        final byte MINUTES_PER_HOUR = 60;
+        final byte HOURS_PER_DAY = 24;
+
+        long currentHour;
+        long currentMinute;
+        long currentSecond;
+
+        long totalSeconds;
+        long totalMinutes;
+        long totalHours;
+
+        long totalMilliseconds = System.currentTimeMillis();
+
+        totalSeconds = totalMilliseconds / MILLISECONDS_PER_SECOND;
+        currentSecond = totalSeconds % SECONDS_PER_MINUTE;
+
+        totalMinutes = totalSeconds / SECONDS_PER_MINUTE;
+        currentMinute = totalMinutes % MINUTES_PER_HOUR;
+
+        totalHours = totalMinutes / MINUTES_PER_HOUR;
+        totalHours += 3;
+        currentHour = totalHours % HOURS_PER_DAY;
+
+        String helpSeconds = "";
+
+        if (currentSecond < 10){
+            helpSeconds = "0";
+        }
+
+        String helpMinutes = "";
+
+        if (currentMinute < 10){
+            helpMinutes = "0";
+        }
+
+        String helpHours = "";
+
+        if (currentHour < 10){
+            helpHours = "0";
+        }
+
+        return String.format("[%s%d:%s%d:%s%d]",
+                helpHours, currentHour,helpMinutes, currentMinute, helpSeconds, currentSecond);
+    }
+
+    public static void simpleLog(String message) {
+        String outString = getTime() + " [INFO] " + message;
+        System.out.println(ansi().fgBrightCyan().a(outString).reset());
+    }
+
+    public static void warningLog(String message) {
+        String outString = getTime() + " [WARNING] " + message;
+        System.out.println(ansi().fgYellow().a(outString).reset());
+    }
+
+    public static void debugLog(String message) {
+        String outString = getTime() + " [DEBUG] " + message;
+        System.out.println(ansi().fgBrightBlack().a(outString).reset());
+    }
+
+    public static void spacerPoints(){
+        String spacerString = "    " + ".".repeat(80);
+        System.out.println(ansi().fgBrightBlack().a(spacerString).reset());
+    }
+}
