@@ -2,11 +2,10 @@ package ru.sablin.lab4.utils;
 
 import org.fusesource.jansi.AnsiConsole;
 
-import static org.fusesource.jansi.Ansi.*;
 import static org.fusesource.jansi.Ansi.ansi;
 
 
-public class outputFunctions {
+public class OutputFunctions {
     static {
         AnsiConsole.systemInstall();
     }
