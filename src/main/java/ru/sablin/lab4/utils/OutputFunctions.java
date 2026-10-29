@@ -5,6 +5,7 @@ import org.fusesource.jansi.AnsiConsole;
 import static org.fusesource.jansi.Ansi.ansi;
 
 
+/**Класс для работы с красивым выводом в консоль (мой аналог Rich)*/
 public class OutputFunctions {
     static {
         AnsiConsole.systemInstall();
