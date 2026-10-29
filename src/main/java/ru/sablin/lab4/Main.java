@@ -61,6 +61,8 @@ public class Main {
         bank.addAccount(a3);
         bank.addAccount(a4);
 
+        mainWindow.bindBank(bank);
+
 //      Функции
         bank.showInfoAboutCurrentBankBranch();
 
