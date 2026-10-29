@@ -2,6 +2,10 @@ package ru.sablin.lab4.models;
 
 import ru.sablin.lab4.utils.OutputFunctions;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 /**
  * Класс для описания банка
  */
@@ -13,6 +17,8 @@ public class Bank {
     /**Адрес отделения*/
     private String bankAddress;
 
+    /** Счета, открытые в этом отделении */
+    private final List<Account> accounts = new ArrayList<>();
 
     /*Геттеры*/
     /**Функция получения id отделения банка*/
@@ -34,6 +40,51 @@ public class Bank {
     /**Функция для установления смены директора отделения банка (смена имени)*/
     public void setCurrentBankDirector (String inputCurrentBankDirector){
         this.bankDirector = inputCurrentBankDirector;
+    }
+
+    /*Функции*/
+    /** Добавить счёт в отделение */
+    public void addAccount(Account account) {
+        if (account == null) return;
+        accounts.add(account);
+        OutputFunctions.debugLog("Счёт " + account.getAccountId()
+                + " добавлен в отделение " + currentBankID);
+    }
+
+    /** Удалить счёт по id */
+    public boolean removeAccount(Integer accountId) {
+        boolean removed = accounts.removeIf(a -> a.getAccountId().equals(accountId));
+        if (removed) {
+            OutputFunctions.debugLog("Счёт " + accountId + " удалён");
+        }
+        return removed;
+    }
+
+    /** Найти счёт по id (или null, если нет) */
+    public Account findAccount(Integer accountId) {
+        for (Account a : accounts) {
+            if (a.getAccountId().equals(accountId)) return a;
+        }
+        return null;
+    }
+
+    /** Список всех счетов отделения */
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    /** Вывести информацию обо всех счетах отделения (полиморфный вызов) */
+    public void showAllAccounts() {
+        OutputFunctions.spacerPoints();
+        OutputFunctions.simpleLog("Счета отделения №" + currentBankID + ":");
+        if (accounts.isEmpty()) {
+            OutputFunctions.warningLog("В отделении пока нет счетов");
+            return;
+        }
+        for (Account account : accounts) {
+            account.showInfo();          // вызовется версия из подкласса
+            OutputFunctions.spacerPoints();
+        }
     }
 
     /**Функция для смены адреса отделения банка*/
@@ -79,8 +130,12 @@ public class Bank {
 
         OutputFunctions.simpleLog("ID отделения: " + this.currentBankID);
         OutputFunctions.simpleLog("Директор: " + this.bankDirector);
+        OutputFunctions.simpleLog("Количество счетов: " + accounts.size());
+
+        OutputFunctions.spacerPoints();
     }
 
+    /**Конструктор*/
     public Bank (Integer bankID, String bankDirector, String bankAddress){
         this.bankDirector = bankDirector;
         this.currentBankID = bankID;
