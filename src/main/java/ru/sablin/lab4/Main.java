@@ -1,6 +1,7 @@
 package ru.sablin.lab4;
 
 import ru.sablin.lab4.utils.OutputFunctions;
+import ru.sablin.lab4.models.Bank;
 
 
 import javax.swing.*;
@@ -33,7 +34,12 @@ public class Main {
 
     static void main() {
         OutputFunctions.simpleLog("Запуск программы");
+        OutputFunctions.spacerPoints();
 
         MainWindowOfTheBank mainWindow = createWindowUI();
+
+        Bank bank = new Bank(1001, "Виталий Носов", "г. Тамбов, ул. Бориса Васильева, д. 12");
+        bank.showInfoAboutGeneralBank();
+        bank.showInfoAboutCurrentBankBranch();
     }
 }
